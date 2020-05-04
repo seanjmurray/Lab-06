@@ -12,10 +12,22 @@ function howManyCookies(randomNum,averageCookies){
   var howMany = randomNum * averageCookies;
   return Math.floor(howMany);
 }
+var test = [2,4,6,8,10,10,8,6,4,2];
+// Finds total cookies from array
+function totalCookies(cookieArray){
+  function adder(total,current){
+    return total + current;
+  }
+  return cookieArray.reduce(adder);
+}
+console.log(totalCookies(test));
 
+var seattle = {
+  minCust: 23,
+  maxCust: 65,
+  avgCookie: 6.3,
 
-
-
+};
 
 
 
