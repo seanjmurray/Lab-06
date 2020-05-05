@@ -54,82 +54,27 @@ function render(city, hours, sales) {
   }
 }
 
-var seattle = {
-  city: 'Seattle',
-  minCust: 23,
-  maxCust: 65,
-  start: 6,
-  end: 20,
-  hours: [],
-  avgCookie: 6.3,
-  cookiesPerHour: [],
-  fill: function () {
-    fillCookies((this.end - this.start), this.minCust, this.maxCust, this.avgCookie, this.cookiesPerHour);
-    hoursOfOp(this.start, (this.end - this.start), this.hours);
-    render(this.city, this.hours, this.cookiesPerHour);
-  }
+// Location Constructor
+function Location(city,min,max,startHour,endHour,avg){
+  this.city = city;
+  this.minCust = min;
+  this.maxCust = max;
+  this.start = startHour;
+  this.end = endHour;
+  this.hours = [];
+  this.avgCookie = avg;
+  this.cookiesPerHour = [];
+}
+// Add fill method to each location
+Location.prototype.fill = function () {
+  fillCookies((this.end - this.start), this.minCust, this.maxCust, this.avgCookie, this.cookiesPerHour);
+  hoursOfOp(this.start, (this.end - this.start), this.hours);
+  render(this.city, this.hours, this.cookiesPerHour);
 };
+// Makes object for each Location
+var seattle = new Location('Seattle',23,65,6,20,6.3);
+var tokyo = new Location('Tokyo',3,24,6,20,1.2);
+var dubai = new Location('Dubai',11,38,6,20,3.7);
+var paris = new Location('Paris',20,38,6,20,2.3);
+var lima = new Location('Lima',2,16,6,20,4.6);
 
-var tokyo = {
-  city: 'Tokyo',
-  minCust: 3,
-  maxCust: 24,
-  start: 6,
-  end: 20,
-  hours: [],
-  avgCookie: 1.2,
-  cookiesPerHour: [],
-  fill: function () {
-    fillCookies((this.end - this.start), this.minCust, this.maxCust, this.avgCookie, this.cookiesPerHour);
-    hoursOfOp(this.start, (this.end - this.start), this.hours);
-    render(this.city, this.hours, this.cookiesPerHour);
-  }
-};
-
-var dubia = {
-  city: 'Dubia',
-  minCust: 11,
-  maxCust: 38,
-  start: 6,
-  end: 20,
-  hours: [],
-  avgCookie: 3.7,
-  cookiesPerHour: [],
-  fill: function () {
-    fillCookies((this.end - this.start), this.minCust, this.maxCust, this.avgCookie, this.cookiesPerHour);
-    hoursOfOp(this.start, (this.end - this.start), this.hours);
-    render(this.city, this.hours, this.cookiesPerHour);
-  }
-};
-
-var paris = {
-  city: 'Paris',
-  minCust: 20,
-  maxCust: 38,
-  start: 6,
-  end: 20,
-  hours: [],
-  avgCookie: 2.3,
-  cookiesPerHour: [],
-  fill: function () {
-    fillCookies((this.end - this.start), this.minCust, this.maxCust, this.avgCookie, this.cookiesPerHour);
-    hoursOfOp(this.start, (this.end - this.start), this.hours);
-    render(this.city, this.hours, this.cookiesPerHour);
-  }
-};
-
-var lima = {
-  city: 'Lima',
-  minCust: 2,
-  maxCust: 16,
-  start: 6,
-  end: 20,
-  hours: [],
-  avgCookie: 4.6,
-  cookiesPerHour: [],
-  fill: function () {
-    fillCookies((this.end - this.start), this.minCust, this.maxCust, this.avgCookie, this.cookiesPerHour);
-    hoursOfOp(this.start, (this.end - this.start), this.hours);
-    render(this.city, this.hours, this.cookiesPerHour);
-  }
-};
