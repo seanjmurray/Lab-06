@@ -12,7 +12,6 @@ function howManyCookies(randomNum,averageCookies){
   var howMany = randomNum * averageCookies;
   return Math.floor(howMany);
 }
-var test = [2,4,6,8,10,10,8,6,4,2];
 // Finds total cookies from array
 function totalCookies(cookieArray){
   var adder = (total,current) => total + current;
@@ -39,9 +38,24 @@ function hoursOfOp(start,total,array){
       array.push(`${start - 12}pm`);
       start++;
     }
+  array.push('Total');
+}
+//Render function
+function render(city,hours,sales){
+  var parent = document.getElementById('test');
+  var header = document.createElement('h3');
+  header.textContent = city;
+  parent.appendChild(header);
+  for(var i = 0;i<hours.length;i++){
+    var text = `${hours[i]}: ${sales[i]}`;
+    var listItem = document.createElement('li');
+    listItem.textContent = text;
+    parent.appendChild(listItem);
+  }
 }
 
 var seattle = {
+  city: 'Seattle',
   minCust: 23,
   maxCust: 65,
   start: 6,
@@ -52,9 +66,71 @@ var seattle = {
   fill: function(){
     fillCookies((this.end-this.start),this.minCust,this.maxCust,this.avgCookie,this.cookiesPerHour);
     hoursOfOp(this.start,(this.end-this.start),this.hours);
+    render(this.city,this.hours,this.cookiesPerHour);
   }
 };
 
-seattle.fill();
-console.log(seattle.cookiesPerHour);
-console.log(seattle.hours);
+var tokyo = {
+  city: 'Tokyo',
+  minCust: 3,
+  maxCust: 24,
+  start: 6,
+  end: 20,
+  hours: [],
+  avgCookie: 1.2,
+  cookiesPerHour: [],
+  fill: function(){
+    fillCookies((this.end-this.start),this.minCust,this.maxCust,this.avgCookie,this.cookiesPerHour);
+    hoursOfOp(this.start,(this.end-this.start),this.hours);
+    render(this.city,this.hours,this.cookiesPerHour);
+  }
+};
+
+var dubia = {
+  city: 'Dubia',
+  minCust: 11,
+  maxCust: 38,
+  start: 6,
+  end: 20,
+  hours: [],
+  avgCookie: 3.7,
+  cookiesPerHour: [],
+  fill: function(){
+    fillCookies((this.end-this.start),this.minCust,this.maxCust,this.avgCookie,this.cookiesPerHour);
+    hoursOfOp(this.start,(this.end-this.start),this.hours);
+    render(this.city,this.hours,this.cookiesPerHour);
+  }
+};
+
+var paris = {
+  city: 'Paris',
+  minCust: 20,
+  maxCust: 38,
+  start: 6,
+  end: 20,
+  hours: [],
+  avgCookie: 2.3,
+  cookiesPerHour: [],
+  fill: function(){
+    fillCookies((this.end-this.start),this.minCust,this.maxCust,this.avgCookie,this.cookiesPerHour);
+    hoursOfOp(this.start,(this.end-this.start),this.hours);
+    render(this.city,this.hours,this.cookiesPerHour);
+  }
+};
+
+var lima = {
+  city: 'Lima',
+  minCust: 2,
+  maxCust: 16,
+  start: 6,
+  end: 20,
+  hours: [],
+  avgCookie: 4.6,
+  cookiesPerHour: [],
+  fill: function(){
+    fillCookies((this.end-this.start),this.minCust,this.maxCust,this.avgCookie,this.cookiesPerHour);
+    hoursOfOp(this.start,(this.end-this.start),this.hours);
+    render(this.city,this.hours,this.cookiesPerHour);
+  }
+};
+
