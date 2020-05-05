@@ -1,1 +1,27 @@
 /* font-family: 'Quicksand', sans-serif; */
+body{
+  background-color: #222831;
+  color: #ececec;
+  text-align: center;
+}
+.light{
+  background-color: #30475e;
+  color: #c1a57b;
+}
+/* NAV BAR */
+nav {
+  background-color: #30475e;
+  padding: 1.1em;
+  width: 100%;
+}
+nav a{
+  background-color: #30475e;
+  color: #c1a57b;
+  text-decoration: none;
+  padding: 1em;
+  border-radius: .5em;
+}
+nav a:hover {
+  background-color: #ececec;
+  color: #30475e;
+}
