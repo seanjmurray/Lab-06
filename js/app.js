@@ -20,9 +20,10 @@ function totalCookies(cookieArray) {
   return cookieArray.reduce(adder);
 }
 // Fills cookie array
-function fillCookies(hours, min, max, avg, array) {
+function fillCookies(hours, min, max, avg, traffic, array) {
   for (var i = 0; i < hours; i++) {
-    var cookieHour = howManyCookies(randomNumber(min, max), avg);
+    var cookieHour = howManyCookies(randomNumber(min, max), avg) * traffic[i];
+    cookieHour = Math.ceil(cookieHour);
     array.push(cookieHour);
   }
   array.push(totalCookies(array));
@@ -42,15 +43,16 @@ function hoursOfOp(start, total, array) {
     }
   array.push('Daily Location Total');
 }
-var locationArray = [];
-//Calculates total for all locations
 var hoursArray = [];
-function findTotals(){
-  return locationArray.reduce(function(array1, array2) {
+var locationArray = [];
+var footerData = [];
+//Calculates total for all locations
+function findTotals(array){
+  array.push(locationArray.reduce(function(array1, array2) {
     return array1.map(function(currentValue, index) {
       return currentValue + array2[index];
     });
-  });
+  }));
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////RENDER SECTION////////////////////////////////////////////////
@@ -92,21 +94,21 @@ function renderFoot(array){
   var parent = document.getElementById('sales');
   var tableFoot = document.createElement('tfoot');
   var tableRow = document.createElement('tr');
-  parent.appendChild(tableFoot);
+  parent.appendChild(tableFoot).setAttribute('id','salesFoot');
   tableFoot.appendChild(tableRow);
   var total = document.createElement('td');
   total.textContent = 'Totals';
   tableRow.appendChild(total);
-  for(var i = 0;i < array.lenght;i++){
+  for(var i = 0; i < array.length;i++){
+    var data = `${array[i]}`;
     var td = document.createElement('td');
-    td.textContent = `${array[i]}`;
+    td.textContent = data;
     tableRow.appendChild(td);
   }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////LOCATION SECTION///////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
-
 // Location Constructor
 function Locations(city,min,max,startHour,endHour,avg){
   this.city = city;
@@ -120,7 +122,7 @@ function Locations(city,min,max,startHour,endHour,avg){
 }
 // Add fill method to each location
 Locations.prototype.fill = function () {
-  fillCookies((this.end - this.start), this.minCust, this.maxCust, this.avgCookie, this.cookiesPerHour);
+  fillCookies((this.end - this.start), this.minCust, this.maxCust, this.avgCookie, this.traffic, this.cookiesPerHour);
   locationArray.push(this.cookiesPerHour);
 };
 //Add render method to each location
@@ -143,4 +145,12 @@ tokyo.fill();
 dubai.fill();
 paris.fill();
 lima.fill();
-var footerData = findTotals(locationArray);
+renderHead(hoursArray);
+seattle.render();
+tokyo.render();
+dubai.render();
+paris.render();
+lima.render();
+findTotals(footerData);
+renderFoot(footerData[0]);
+
