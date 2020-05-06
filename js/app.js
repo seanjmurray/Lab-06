@@ -1,4 +1,7 @@
 'use strict';
+//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////MATH FUNCTIONS////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 // Random number between min and max
 function randomNumber(min, max) {
   min = Math.ceil(min);
@@ -6,7 +9,6 @@ function randomNumber(min, max) {
   var number = Math.floor(Math.random() * (max - min + 1)) + min;
   return number;
 }
-
 // Finds cookies sold per hour
 function howManyCookies(randomNum, averageCookies) {
   var howMany = randomNum * averageCookies;
@@ -40,57 +42,70 @@ function hoursOfOp(start, total, array) {
     }
   array.push('Daily Location Total');
 }
-var renderSwitch = false;
-//Render function
+var locationArray = [];
+//Calculates total for all locations
+var hoursArray = [];
+function findTotals(){
+  return locationArray.reduce(function(array1, array2) {
+    return array1.map(function(currentValue, index) {
+      return currentValue + array2[index];
+    });
+  });
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////RENDER SECTION////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+// Render function for table header with hours
+function renderHead(hours){
+  var parent = document.getElementById('sales');
+  var tableRow = document.createElement('tr');
+  var thead = document.createElement('thead');
+  parent.appendChild(thead);
+  thead.appendChild(tableRow);
+  var spacer = document.createElement('th');
+  tableRow.appendChild(spacer);
+  for (var i = 0; i < hours.length; i++) {
+    var text = `${hours[i]}`;
+    var th = document.createElement('th');
+    th.textContent = text;
+    tableRow.appendChild(th);
+  }
+}
+//Render function for location data
 function renderRow(city, sales) {
   var parent = document.getElementById('sales');
   var tableRow = document.createElement('tr');
   parent.appendChild(tableRow).setAttribute('id',`${city}`);
-  parent = document.getElementById(`${city}`);
-  var rowHead = document.createElement('th');
-  rowHead.textContent = city;
-  parent.appendChild(rowHead);
+  var cityRow = document.getElementById(`${city}`);
+  var cityName = document.createElement('td');
+  cityName.textContent = city;
+  cityRow.appendChild(cityName);
   for (var i = 0; i < sales.length; i++) {
     var text = `${sales[i]} cookies`;
-    var listItem = document.createElement('td');
-    listItem.textContent = text;
-    parent.appendChild(listItem);
+    var td = document.createElement('td');
+    td.textContent = text;
+    cityRow.appendChild(td);
   }
-  renderSwitch =true;
 }
-function renderHead(hours){
-//finds sales table adds thead tag
+//Render function for table foot
+function renderFoot(array){
   var parent = document.getElementById('sales');
-  // TR for thead
+  var tableFoot = document.createElement('tfoot');
   var tableRow = document.createElement('tr');
-  // Only renders top of table with time first time
-  if(!renderSwitch){
-    var thead = document.createElement('thead');
-    parent.appendChild(thead);
-    // adds new tr
-    parent.appendChild(tableRow);
-    //adds one empty th for layout
-    parent.appendChild(document.createElement('th'));
-    // TH for thead with times
-    for (var i = 0; i < hours.length; i++) {
-      var text = `${hours[i]}`;
-      var header = document.createElement('th');
-      header.textContent = text;
-      parent.appendChild(header);
-    }
+  parent.appendChild(tableFoot);
+  tableFoot.appendChild(tableRow);
+  var total = document.createElement('td');
+  total.textContent = 'Totals';
+  tableRow.appendChild(total);
+  for(var i = 0;i < array.lenght;i++){
+    var td = document.createElement('td');
+    td.textContent = `${array[i]}`;
+    tableRow.appendChild(td);
   }
 }
-var locationArray = [];
-var locationTotal = [];
-var hoursArray = [];
-function findTotals(){
-  return locationArray.reduce(function(array1, array2) {
-    return array1.map(function(value, index) {
-      return value + array2[index];
-    });
-  });
-}
-
+//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////LOCATION SECTION///////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 // Location Constructor
 function Locations(city,min,max,startHour,endHour,avg){
@@ -106,12 +121,16 @@ function Locations(city,min,max,startHour,endHour,avg){
 // Add fill method to each location
 Locations.prototype.fill = function () {
   fillCookies((this.end - this.start), this.minCust, this.maxCust, this.avgCookie, this.cookiesPerHour);
+  locationArray.push(this.cookiesPerHour);
 };
 //Add render method to each location
 Locations.prototype.render = function(){
   renderRow(this.city, this.cookiesPerHour);
 };
-// Makes object for each Location
+//////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////CODE THAT ACTUALLY DOES STUFF////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 var seattle = new Locations('Seattle',23,65,6,20,6.3);
 var tokyo = new Locations('Tokyo',3,24,6,20,1.2);
 var dubai = new Locations('Dubai',11,38,6,20,3.7);
@@ -119,3 +138,9 @@ var paris = new Locations('Paris',20,38,6,20,2.3);
 var lima = new Locations('Lima',2,16,6,20,4.6);
 
 hoursOfOp(6,14,hoursArray);
+seattle.fill();
+tokyo.fill();
+dubai.fill();
+paris.fill();
+lima.fill();
+var footerData = findTotals(locationArray);
