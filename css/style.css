@@ -25,3 +25,16 @@ nav a:hover {
   background-color: #ececec;
   color: #30475e;
 }
+/* table{
+border-collapse: separate;
+border-spacing: 2px;
+border-color: #fff;
+ }
+ th{
+ vertical-align: center;  
+ }
+td{
+  border: 2px solid #fff;
+display: table-cell;
+vertical-align: inherit;
+} */

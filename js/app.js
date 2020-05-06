@@ -1,4 +1,7 @@
 'use strict';
+//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////MATH FUNCTIONS////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 // Random number between min and max
 function randomNumber(min, max) {
   min = Math.ceil(min);
@@ -6,7 +9,6 @@ function randomNumber(min, max) {
   var number = Math.floor(Math.random() * (max - min + 1)) + min;
   return number;
 }
-
 // Finds cookies sold per hour
 function howManyCookies(randomNum, averageCookies) {
   var howMany = randomNum * averageCookies;
@@ -18,9 +20,10 @@ function totalCookies(cookieArray) {
   return cookieArray.reduce(adder);
 }
 // Fills cookie array
-function fillCookies(hours, min, max, avg, array) {
+function fillCookies(hours, min, max, avg, traffic, array) {
   for (var i = 0; i < hours; i++) {
-    var cookieHour = howManyCookies(randomNumber(min, max), avg);
+    var cookieHour = howManyCookies(randomNumber(min, max), avg) * traffic[i];
+    cookieHour = Math.ceil(cookieHour);
     array.push(cookieHour);
   }
   array.push(totalCookies(array));
@@ -38,43 +41,121 @@ function hoursOfOp(start, total, array) {
       array.push(`${start - 12}pm`);
       start++;
     }
-  array.push('Total');
+  array.push('Daily Location Total');
 }
-//Render function
-function render(city, hours, sales) {
+var hoursArray = [];
+var locationArray = [];
+var footerData = [];
+var footIndex = 0;
+//Calculates total for all locations
+function findTotals(array){
+  array.push(locationArray.reduce(function(array1, array2) {
+    return array1.map(function(currentValue, index) {
+      return currentValue + array2[index];
+    });
+  }));
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////RENDER SECTION////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+// Render function for table header with hours
+function renderHead(hours){
   var parent = document.getElementById('sales');
-  var header = document.createElement('h3');
-  header.textContent = city;
-  parent.appendChild(header);
+  var tableRow = document.createElement('tr');
+  var thead = document.createElement('thead');
+  parent.appendChild(thead);
+  thead.appendChild(tableRow);
+  var spacer = document.createElement('th');
+  tableRow.appendChild(spacer);
   for (var i = 0; i < hours.length; i++) {
-    var text = `${hours[i]}: ${sales[i]} cookies`;
-    var listItem = document.createElement('li');
-    listItem.textContent = text;
-    parent.appendChild(listItem);
+    var text = `${hours[i]}`;
+    var th = document.createElement('th');
+    th.textContent = text;
+    tableRow.appendChild(th);
+  }
+}
+//Render function for location data
+function renderRow(city, sales) {
+  var parent = document.getElementById('sales');
+  var tableRow = document.createElement('tr');
+  parent.appendChild(tableRow).setAttribute('id',`${city}`);
+  var cityRow = document.getElementById(`${city}`);
+  var cityName = document.createElement('td');
+  cityName.textContent = city;
+  cityRow.appendChild(cityName);
+  for (var i = 0; i < sales.length; i++) {
+    var text = `${sales[i]} cookies`;
+    var td = document.createElement('td');
+    td.textContent = text;
+    cityRow.appendChild(td);
+  }
+}
+//Render function for table foot
+function renderFoot(array){
+  var parent = document.getElementById('sales');
+  var tableFoot = document.createElement('tfoot');
+  var tableRow = document.createElement('tr');
+  parent.appendChild(tableFoot).setAttribute('id','salesFoot');
+  tableFoot.appendChild(tableRow);
+  var total = document.createElement('td');
+  total.textContent = 'Totals';
+  tableRow.appendChild(total);
+  for(var i = 0; i < array.length;i++){
+    var data = `${array[i]}`;
+    var td = document.createElement('td');
+    td.textContent = data;
+    tableRow.appendChild(td);
   }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////LOCATION SECTION///////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 // Location Constructor
-function Location(city,min,max,startHour,endHour,avg){
+function Locations(city,min,max,startHour,endHour,avg){
   this.city = city;
   this.minCust = min;
   this.maxCust = max;
   this.start = startHour;
   this.end = endHour;
-  this.hours = [];
+  this.traffic = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6];
   this.avgCookie = avg;
   this.cookiesPerHour = [];
 }
 // Add fill method to each location
-Location.prototype.fill = function () {
-  fillCookies((this.end - this.start), this.minCust, this.maxCust, this.avgCookie, this.cookiesPerHour);
-  hoursOfOp(this.start, (this.end - this.start), this.hours);
-  render(this.city, this.hours, this.cookiesPerHour);
+Locations.prototype.fill = function () {
+  fillCookies((this.end - this.start), this.minCust, this.maxCust, this.avgCookie, this.traffic, this.cookiesPerHour);
+  locationArray.push(this.cookiesPerHour);
+  findTotals(footerData);
+  footIndex++;
 };
-// Makes object for each Location
-var seattle = new Location('Seattle',23,65,6,20,6.3);
-var tokyo = new Location('Tokyo',3,24,6,20,1.2);
-var dubai = new Location('Dubai',11,38,6,20,3.7);
-var paris = new Location('Paris',20,38,6,20,2.3);
-var lima = new Location('Lima',2,16,6,20,4.6);
+//Add render method to each location
+Locations.prototype.render = function(){
+  renderRow(this.city, this.cookiesPerHour);
+};
+//////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////CODE THAT ACTUALLY DOES STUFF////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+var seattle = new Locations('Seattle',23,65,6,20,6.3);
+var tokyo = new Locations('Tokyo',3,24,6,20,1.2);
+var dubai = new Locations('Dubai',11,38,6,20,3.7);
+var paris = new Locations('Paris',20,38,6,20,2.3);
+var lima = new Locations('Lima',2,16,6,20,4.6);
+
+hoursOfOp(6,14,hoursArray);
+seattle.fill();
+tokyo.fill();
+dubai.fill();
+paris.fill();
+lima.fill();
+renderHead(hoursArray);
+seattle.render();
+tokyo.render();
+dubai.render();
+paris.render();
+lima.render();
+renderFoot(footerData[footIndex-1]);
+
+
 
