@@ -42,7 +42,7 @@ function hoursOfOp(start, total, array) {
 }
 //Render function
 function render(city, hours, sales) {
-  var parent = document.getElementById('sales');
+  var parent = document.getElementById('test');
   var header = document.createElement('h3');
   header.textContent = city;
   parent.appendChild(header);
