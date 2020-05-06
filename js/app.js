@@ -131,6 +131,7 @@ Locations.prototype.fill = function () {
 };
 //Add render method to each location
 Locations.prototype.render = function(){
+  this.fill();
   renderRow(this.city, this.cookiesPerHour);
 };
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,17 +145,12 @@ var paris = new Locations('Paris',20,38,6,20,2.3);
 var lima = new Locations('Lima',2,16,6,20,4.6);
 
 hoursOfOp(6,14,hoursArray);
-seattle.fill();
-tokyo.fill();
-dubai.fill();
-paris.fill();
-lima.fill();
 renderHead(hoursArray);
 seattle.render();
-tokyo.render();
-dubai.render();
-paris.render();
-lima.render();
+// tokyo.render();
+// dubai.render();
+// paris.render();
+// lima.render();
 renderFoot(footerData[footIndex-1]);
 
 
