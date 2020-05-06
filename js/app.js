@@ -46,6 +46,7 @@ function hoursOfOp(start, total, array) {
 var hoursArray = [];
 var locationArray = [];
 var footerData = [];
+var footIndex = 0;
 //Calculates total for all locations
 function findTotals(array){
   array.push(locationArray.reduce(function(array1, array2) {
@@ -106,6 +107,7 @@ function renderFoot(array){
     tableRow.appendChild(td);
   }
 }
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////LOCATION SECTION///////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,6 +126,8 @@ function Locations(city,min,max,startHour,endHour,avg){
 Locations.prototype.fill = function () {
   fillCookies((this.end - this.start), this.minCust, this.maxCust, this.avgCookie, this.traffic, this.cookiesPerHour);
   locationArray.push(this.cookiesPerHour);
+  findTotals(footerData);
+  footIndex++;
 };
 //Add render method to each location
 Locations.prototype.render = function(){
@@ -151,6 +155,7 @@ tokyo.render();
 dubai.render();
 paris.render();
 lima.render();
-findTotals(footerData);
-renderFoot(footerData[0]);
+renderFoot(footerData[footIndex-1]);
+
+
 
