@@ -171,8 +171,14 @@ var dubai = new Locations('Dubai',dubaiMap,dubaiBio,11,38,6,20,3.7);
 var paris = new Locations('Paris',parisMap,parisBio,20,38,6,20,2.3);
 var lima = new Locations('Lima',limaMap,limaBio,2,16,6,20,4.6);
 
-// hoursOfOp(6,14,hoursArray);
-// renderHead(hoursArray);
+hoursOfOp(6,14,hoursArray);
+renderHead(hoursArray);
+seattle.render();
+paris.render();
+lima.render();
+dubai.render();
+tokyo.render();
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////I ACTUALLY AM CRAZY CODE///////////////////////////////////////
