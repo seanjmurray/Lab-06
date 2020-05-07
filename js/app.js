@@ -178,6 +178,7 @@ var lima = new Locations('Lima',limaMap,limaBio,2,16,6,20,4.6);
 ///////////////////////////////I ACTUALLY AM CRAZY CODE///////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
+
 document.getElementById('seattle').addEventListener('click', function(){
   removeStuff();
   renderLocations(seattleMap,seattle.city,seattleBio);
