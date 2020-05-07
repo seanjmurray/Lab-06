@@ -12,21 +12,42 @@
   <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 
-<body>
+<body onload="renderHome()">
   <nav>
-    <a href=""><i class="fas fa-fish fa-1x"></i></a> 
-    <a href="">Locations</a>
-    <a href="">Our Story</a>
-    <a href="sales.html">Sales</a>
+    <a onclick="renderHome()" href=""><img src="images/salmon.png" alt="Salmon Cookie Logo"></a> 
+    <div class="dropdown test class">  
+      <button  id="location" class="navBtn"">Locations<i class="fa fa-caret-down"></i></button>
+      <div class="dropdown-content">
+        <button id="seattle">Seattle</button>
+        <button id="paris">Paris</button>
+        <button id="dubai">Dubai</button>
+        <button id="lima">Lima</button>
+        <button id="tokyo">Tokyo</button>
+      </div>
+    </div>
+    <button class="navBtn" id="ourStory">Our Story</button>
+    <a class="navBtn" href="sales.html">Sales</a>
   </nav>
   <header>
-
+    <marquee>Thank you for your support during the COVID-19 shutdown!</marquee>
   </header>
-  <main>
-    <section>
-      
-    </section>
-
+  <main class="flex">
+    <aside>
+      <h4>Check out our merchandise</h4>
+      <figure>
+        <img class="store" src="images/shirt.jpg" alt="Salmon Cookie Shirt">
+        <figcaption>
+          Pat's Cookies Shirt: $19.99
+        </figcaption>
+      </figure>
+      <figure>
+        <img class="store" src="images/cutter.jpeg" alt="Cookie Cutter">
+        <figcaption>
+          Our custom cookie cutter: $9.99
+        </figcaption>
+      </figure>
+    </aside>
+    <section id="reactDoesThisBetter"></section>
   </main>
 <footer>
   <p> &copy; Salmon Cookies 2020 </p>

@@ -2,11 +2,25 @@
 body{
   background-color: #222831;
   color: #ececec;
+  font-family: Quicksand;
   text-align: center;
+  margin: 0;
 }
 .light{
   background-color: #30475e;
   color: #c1a57b;
+}
+a {
+  text-decoration: none;
+}
+/* OUR STORY */
+div img{
+  height: 300px;
+  margin: 2em;
+  border-radius: 1em;
+}
+.about{
+  line-height: 1.25em;
 }
 /* NAV BAR */
 nav {
@@ -14,17 +28,82 @@ nav {
   padding: 1.1em;
   width: 100%;
 }
-nav a{
+nav a img{
+  height: 2em;
+}
+
+.navBtn {
   background-color: #30475e;
-  color: #c1a57b;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content button {
+  color: black;
+  padding: 12px 16px;
   text-decoration: none;
+  display: block;
+}
+.dropdown-content button:hover {background-color: #ddd;}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {background-color: #30475e;}
+/* Marquee */
+marquee{
+  height: 2em;
+}
+/* Store aside */
+aside{
+  width: 15%;
+}
+.store{
+  width: 10em;
+}
+
+/* LOCATIONS */
+#reactDoesThisBetter{
+  width:85%;
+}
+.flex{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 2em;
+}
+iframe{
+  height: 300px;
+  width: 400px;
+  margin-right: 2em;
+}
+
+article{
+  background-color: #30475e;
+  color: #f2a365;
+  border-radius: 1em;
+  font-family: Quicksand;
+  text-align: justify;
+  height: 268px;
+  width: 368px;
   padding: 1em;
-  border-radius: .5em;
 }
-nav a:hover {
-  background-color: #ececec;
-  color: #30475e;
-}
+
+
+
+
 /* table{
 border-collapse: separate;
 border-spacing: 2px;
