@@ -100,7 +100,10 @@ article{
   width: 368px;
   padding: 1em;
 }
-
+/* Sales */
+label{
+  display: block;
+}
 
 
 

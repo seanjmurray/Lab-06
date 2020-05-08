@@ -2,6 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////GLOBAL VARIABLES///////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
+var allLocations = [];
 ///////////////////////////////////MATH VARS//////////////////////////////////////////////////
 var hoursArray = [];
 var locationArray = [];
@@ -48,9 +49,9 @@ function fillCookies(hours, min, max, avg, traffic, array) {
   for (var i = 0; i < hours; i++) {
     var cookieHour = howManyCookies(randomNumber(min, max), avg) * traffic[i];
     cookieHour = Math.ceil(cookieHour);
-    array.push(cookieHour);
+    array[i] = cookieHour;
   }
-  array.push(totalCookies(array));
+  array[array.length-1+1]= totalCookies(array);
 }
 // Fills hours of op array
 function hoursOfOp(start, total, array) {
@@ -70,11 +71,11 @@ function hoursOfOp(start, total, array) {
 
 //Calculates total for all locations
 function findTotals(array){
-  array.push(locationArray.reduce(function(array1, array2) {
+  array[0] = locationArray.reduce(function(array1, array2) {
     return array1.map(function(currentValue, index) {
       return currentValue + array2[index];
     });
-  }));
+  });
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////RENDER SECTION////////////////////////////////////////////////
@@ -84,7 +85,7 @@ function findTotals(array){
 function renderHead(hours){
   var tableRow = document.createElement('tr');
   var thead = document.createElement('thead');
-  parentElement.appendChild(thead);
+  parentElement.appendChild(thead).setAttribute('id','salesHead');
   thead.appendChild(tableRow);
   var spacer = document.createElement('th');
   tableRow.appendChild(spacer);
@@ -103,7 +104,7 @@ function renderRow(city, sales) {
   var cityName = document.createElement('td');
   cityName.textContent = city;
   cityRow.appendChild(cityName);
-  for (var i = 0; i < sales.length; i++) {
+  for (var i = 0; i < 15; i++) {
     var text = `${sales[i]} cookies`;
     var td = document.createElement('td');
     td.textContent = text;
@@ -115,15 +116,12 @@ function renderRow(city, sales) {
 function renderFoot(array){
   var tableFoot = document.createElement('tfoot');
   var tableRow = document.createElement('tr');
-  if(renderSwitch){
-    document.getElementById('salesFoot').remove(tableRow);
-  }
   parentElement.appendChild(tableFoot).setAttribute('id','salesFoot');
   tableFoot.appendChild(tableRow);
   var total = document.createElement('td');
   total.textContent = 'Totals';
   tableRow.appendChild(total);
-  for(var i = 0; i < array.length;i++){
+  for(var i = 0; i < 15;i++){
     var data = `${array[i]}`;
     var td = document.createElement('td');
     td.textContent = data;
@@ -147,19 +145,17 @@ function Locations(city,mapLink,bio,min,max,startHour,endHour,avg){
   this.traffic = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6];
   this.avgCookie = avg;
   this.cookiesPerHour = [];
+  allLocations.push(this);
 }
 // Add fill method to each location
 Locations.prototype.fill = function () {
   fillCookies((this.end - this.start), this.minCust, this.maxCust, this.avgCookie, this.traffic, this.cookiesPerHour);
   locationArray.push(this.cookiesPerHour);
-  findTotals(footerData);
-  footIndex++;
 };
 //Add render method to each location
 Locations.prototype.render = function(){
   this.fill();
   renderRow(this.city, this.cookiesPerHour);
-  renderFoot(footerData[footIndex-1]);
 };
 //////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////CODE THAT ACTUALLY DOES STUFF////////////////////////////////////////
@@ -170,48 +166,85 @@ var tokyo = new Locations('Tokyo',tokyoMap,tokyoBio,3,24,6,20,1.2);
 var dubai = new Locations('Dubai',dubaiMap,dubaiBio,11,38,6,20,3.7);
 var paris = new Locations('Paris',parisMap,parisBio,20,38,6,20,2.3);
 var lima = new Locations('Lima',limaMap,limaBio,2,16,6,20,4.6);
-
 hoursOfOp(6,14,hoursArray);
-renderHead(hoursArray);
-seattle.render();
-paris.render();
-lima.render();
-dubai.render();
-tokyo.render();
+function renderTable(){
+  removeTable();
+  renderHead(hoursArray);
+  for(var i = 0;i <allLocations.length;i++){
+    allLocations[i].render();
+  }
+  findTotals(footerData);
+  renderFoot(footerData[0]);
+}
+
+
+// document.getElementById('location-form').addEventListener('submit',cityMaker);
+function removeTable(){
+  if(renderSwitch){
+    document.getElementById('sales').innerHTML = '<table id="sales"></table>';
+  }
+}
+
+function cityMaker(event){
+  event.preventDefault();
+  var city = event.target.city.value;
+  var min = Number(event.target.min.value);
+  var max = Number(event.target.max.value);
+  var avg = parseFloat(event.target.avg.value);
+  new Locations(city,'null','null',min,max,6,20,avg);
+  renderTable();
+  // allLocations[allLocations.length-1].render();
+  console.log(allLocations);
+}
+
+
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////I ACTUALLY AM CRAZY CODE///////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
+function renderLocations(event){
+  console.log(event);
+  var city = `${event.target.id}`;
+  var map = `${event.target.id}Map`;
+  var bio = `${event.target.id}Bio`;
+  console.log(city,map,bio);
+  removeStuff();
+  renderLocation(map,city,bio);
+}
 
-document.getElementById('seattle').addEventListener('click', function(){
-  removeStuff();
-  renderLocations(seattleMap,seattle.city,seattleBio);
-});
-document.getElementById('dubai').addEventListener('click', function(){
-  removeStuff();
-  renderLocations(dubaiMap,dubai.city,dubaiBio);
-});
-document.getElementById('tokyo').addEventListener('click', function(){
-  removeStuff();
-  renderLocations(tokyoMap,tokyo.city,tokyoBio);
-});
-document.getElementById('paris').addEventListener('click', function(){
-  removeStuff();
-  renderLocations(parisMap,paris.city,parisBio);
-});
-document.getElementById('lima').addEventListener('click', function(){
-  removeStuff();
-  renderLocations(limaMap,lima.city,limaBio);
-});
-document.getElementById('ourStory').addEventListener('click', function(){
-  removeStuff();
-  renderStory();
-});
+document.getElementById('locationBox').addEventListener('click', renderLocations);
 
 
-///////////THIS IS LITERALLY THE BEST CODE I HAVE EVER WRITTEN///////////
+// document.getElementById('seattle').addEventListener('click', function(){
+//   removeStuff();
+//   renderLocations(seattleMap,'seattle',seattleBio);
+// });
+// document.getElementById('dubai').addEventListener('click', function(){
+//   removeStuff();
+//   renderLocations(dubaiMap,dubai.city,dubaiBio);
+// });
+// document.getElementById('tokyo').addEventListener('click', function(){
+//   removeStuff();
+//   renderLocations(tokyoMap,tokyo.city,tokyoBio);
+// });
+// document.getElementById('paris').addEventListener('click', function(){
+//   removeStuff();
+//   renderLocations(parisMap,paris.city,parisBio);
+// });
+// document.getElementById('lima').addEventListener('click', function(){
+//   removeStuff();
+//   renderLocations(limaMap,lima.city,limaBio);
+// });
+// document.getElementById('ourStory').addEventListener('click', function(){
+//   removeStuff();
+//   renderStory();
+// });
+
+
+//////////////////////THIS IS LITERALLY THE BEST CODE I HAVE EVER WRITTEN/////////////////////
 function removeStuff(){
   if(locationSwitch){
     document.getElementsByClassName('getme')[0].parentNode.innerHTML= '<span class="getme"></span>';
@@ -229,7 +262,7 @@ function renderHome(){
 }
 
 var locationSwitch = false;
-function renderLocations(map,city,bio){
+function renderLocation(map,city,bio){
   var parentThing = document.getElementById('reactDoesThisBetter');
   var div = document.createElement('div');
   var article = document.createElement('article');
