@@ -28,7 +28,7 @@ nav {
   padding: 1.1em;
   width: 100%;
 }
-nav a img{
+.logo{
   height: 2em;
 }
 
@@ -100,7 +100,10 @@ article{
   width: 368px;
   padding: 1em;
 }
-
+/* Sales */
+label{
+  display: block;
+}
 
 
 

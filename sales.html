@@ -11,12 +11,33 @@
   <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
   <body>
+    <form id="location-form">
+      <fieldset>
+        <label>City:
+          <input required name="city" type="text" placeholder="City name">
+        </label>
+        <label>Minimum customers per hour:
+          <input required name="min" type="number" placeholder="20">
+        </label>
+        <label>Maximum customers per hour:
+          <input required name="max" type="number" placeholder="50">
+        </label>
+        <label>Average Cookies per customer:
+          <input required name="avg" type="number" step=".1" placeholder="6.5">
+        </label>
+        <label>
+          <input name="submit" type="submit"> 
+        </label>
+      </fieldset>
+    </form>
 <table id="sales"></table>
 <table id="employees"></table>
     
     <footer>
       <p> &copy; Salmon Cookies 2020 </p>
     </footer>
-    <script src="js/app.js"></script>
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/modules/myMath.js"></script>
+    <script type="module" src="js/modules/myRender.js"></script>
   </body>
 </html>
