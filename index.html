@@ -5,18 +5,19 @@
   <title>Salmon Cookies</title>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/b70e821b8b.js" crossorigin="anonymous"></script>
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/b70e821b8b.js" crossorigin="anonymous"></script>
   <!-- CSS -->
   <link rel="stylesheet" href="css/reset.css" type="text/css">
   <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 
-<body onload="renderHome()">
+<body>
   <nav>
-    <a onclick="renderHome()" href=""><img src="images/salmon.png" alt="Salmon Cookie Logo"></a> 
-    <div id="locationBox" class="dropdown">  
-      <button  id="location" class="navBtn">Locations<i class="fa fa-caret-down"></i></button>
+    <img src="images/salmon.png" alt="Salmon Cookie Logo" class="logo">
+    <button id="fish" class="navBtn">Home</button>
+    <div id="locationBox" class="dropdown">
+      <button id="location" class="navBtn">Locations<i class="fa fa-caret-down"></i></button>
       <div class="dropdown-content">
         <button id="seattle">Seattle</button>
         <button id="paris">Paris</button>
@@ -49,10 +50,12 @@
     </aside>
     <section id="reactDoesThisBetter"></section>
   </main>
-<footer>
-  <p> &copy; Salmon Cookies 2020 </p>
-</footer>
-  <script src="js/app.js"></script>
+  <footer>
+    <p> &copy; Salmon Cookies 2020 </p>
+  </footer>
+  <script type="module" src="js/index.js"></script>
+  <script type="module" src="js/modules/myMath.js"></script>
+  <script type="module" src="js/modules/myRender.js"></script>
 </body>
 
 </html>
