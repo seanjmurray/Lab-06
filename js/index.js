@@ -1,5 +1,5 @@
 'use strict';
-import {myRender} from '/js/modules/myRender.js';
+import {myRender} from '/modules/myRender.js';
 
 
 document.onload = myRender.indexRender(myRender.home,myRender.target);
