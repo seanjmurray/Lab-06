@@ -1,7 +1,7 @@
 'use strict';
 
-import {myMath} from './modules/myMath.js'
-import {myRender} from './modules/myRender.js'
+import {myMath} from './myMath.js'
+import {myRender} from './myRender.js'
 //////////////////////////////////////////////////////////////////////////////////////////////
 var allLocations = [];
 var hoursArray = [];
