@@ -96,7 +96,7 @@ var myRender = {
 </header>
 <main>
 <section>
-  <img src="/images/family.jpg" alt="Family" class="padding">
+  <img src="images/family.jpg" alt="Family" class="padding">
 </section>
 <section class="dark">
   <p class="padding">I started this business when all of my friends kept asking for my cookie recipe. Now we have expanded to 5 locations across 5 continents, I never thought my cookie's would take me there. Thank you so much.</p>
