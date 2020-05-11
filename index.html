@@ -10,52 +10,40 @@
   <!-- CSS -->
   <link rel="stylesheet" href="css/reset.css" type="text/css">
   <link rel="stylesheet" href="css/style.css" type="text/css">
+
 </head>
 
 <body>
-  <nav>
-    <img src="images/salmon.png" alt="Salmon Cookie Logo" class="logo">
-    <button id="fish" class="navBtn">Home</button>
-    <div id="locationBox" class="dropdown">
-      <button id="location" class="navBtn">Locations<i class="fa fa-caret-down"></i></button>
-      <div class="dropdown-content">
+  <div id="mySidenav" class="sidenav">
+    <a class="closebtn" id="closeMe">&times;</a>
+    <button id="home">Home</button>
+    <button id="ourStory">Our Story</button>
+    <button id="admin">Admin</button>
+    <div class="dropdown">
+      <button class="dropbtn">Locations <i class="fas fa-caret-down"></i></button>
+      <div class="dropBox">
         <button id="seattle">Seattle</button>
         <button id="paris">Paris</button>
         <button id="dubai">Dubai</button>
-        <button id="lima">Lima</button>
         <button id="tokyo">Tokyo</button>
+        <button id="lima">Lima</button>
       </div>
     </div>
-    <button class="navBtn" id="ourStory">Our Story</button>
-    <a class="navBtn" href="sales.html">Sales</a>
-  </nav>
-  <header>
-    <marquee>Thank you for your support during the COVID-19 shutdown!</marquee>
-  </header>
-  <main class="flex">
-    <aside>
-      <h4>Check out our merchandise</h4>
-      <figure>
-        <img class="store" src="images/shirt.jpg" alt="Salmon Cookie Shirt">
-        <figcaption>
-          Pat's Cookies Shirt: $19.99
-        </figcaption>
-      </figure>
-      <figure>
-        <img class="store" src="images/cutter.jpeg" alt="Cookie Cutter">
-        <figcaption>
-          Our custom cookie cutter: $9.99
-        </figcaption>
-      </figure>
-    </aside>
-    <section id="reactDoesThisBetter"></section>
-  </main>
-  <footer>
-    <p> &copy; Salmon Cookies 2020 </p>
-  </footer>
+    <div class="social">
+      <h3>Contact Us</h3>
+      <div class="flex-container">
+        <i class="fab fa-twitter-square fa-2x"></i>
+        <i class="fab fa-facebook-square fa-2x"></i>
+        <i class="fab fa-instagram-square fa-2x"></i>
+      </div>
+    </div>
+  </div>
+  <span id="openMe">&#9776;</span>
+  <div id="main">
+    
+  </div>
   <script type="module" src="js/index.js"></script>
   <script type="module" src="js/modules/myMath.js"></script>
   <script type="module" src="js/modules/myRender.js"></script>
 </body>
-
 </html>
